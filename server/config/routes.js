@@ -1,104 +1,42 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/meerkats');
-var MeerkatSchema = new mongoose.Schema({
-    name: {type : String, required : true},
-    age : {type : Number, required : true},
-    favorite_food : {type : String, required : true},
-})
-mongoose.model('Meerkat', MeerkatSchema); 
-var Meerkat = mongoose.model('Meerkat') 
-mongoose.Promise = global.Promise;
+var meerkats = require('../controllers/meerkats')
 
 module.exports = function(app){
     
     // GET Routes
     // Root Request
     app.get('/', function(req, res) {
-        var all;
-        Meerkat.find({}, function(err, meerkats){
-            if (err){
-                console.log('Something went wrong' + err)
-                res.redirect('/')
-            } else {
-                all = meerkats
-                // console.log(meerkats)
-                res.render('index', {meerkats : all});
-            }
-        })
+        meerkats.index(req, res)
     })
     
     //form to create new meerkat
     app.get('/new', function(req, res){
-        res.render('new')
+        meerkats.new(req, res)
     })
     
     //page to view details
     app.get('/meerkats/:id', function(req, res){
-        var myMeerkat;
-        Meerkat.find({_id : Object(req.params.id)}, function(err, meerkat){
-            if (err){
-                console.log('Something went wrong: ' + err)
-                res.redirect('/')
-            } else {
-                myMeerkat = meerkat[0]
-                res.render('meerkat', {meerkat : myMeerkat})
-            }
-        })
+        meerkats.viewDetails(req, res)
     })
     
     //form to update a profile
     app.get('/meerkats/edit/:id', function(req, res){
-        var myMeerkat;
-        Meerkat.find({_id : Object(req.params.id)}, function(err, meerkat){
-            if (err){
-                console.log('Something went wrong: ' + err)
-                res.redirect('/')
-            } else {
-                myMeerkat = meerkat[0]
-                res.render('editMeerkat', {meerkat : myMeerkat})
-            }
-        })
+        meerkats.update(req, res)
     })
+
     
     //POST routes
-    
     //route to create a new meerkat
     app.post('/meerkats', function(req, res){
-        var newMeerkat = new Meerkat({name : req.body.name, age : req.body.age, favorite_food : req.body.favorite_food})
-        newMeerkat.save(function(err){
-            if (err){
-                console.log('Something went wrong' + err)
-                res.redirect('/')
-            } else {
-                console.log("Created a new meerkat")
-                res.redirect('/')
-            }
-        })
+        meerkats.create(req, res)
     })
     
     //route to edit an existing meerkat
     app.post('/meerkats/:id', function(req, res){
-        Meerkat.update({_id : Object(req.params.id)}, {$set : {name : req.body.name, age : req.body.age, favorite_food : req.body.favorite_food}}, function(err){
-            if (err){
-                console.log("Something went wrong: " + err)
-                res.redirect('/')
-            }
-            else {
-                res.redirect('/')
-            }
-        })
+        meerkats.edit(req, res)
     })
     
     //route to delete a meerkat from the db
     app.post('/meerkats/destroy/:id', function(req, res){
-        Meerkat.remove({_id : Object(req.params.id)}, function(err){
-            if (err){
-                console.log("Something went wrong: " + err)
-                res.redirect('/')
-            }
-            else {
-                res.redirect('/')
-            }
-        })
+        meerkats.delete(req, res)
     })
 }
