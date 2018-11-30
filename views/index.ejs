@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meerkat Manor</title>
+</head>
+<body>
+    <h2>All meerkats</h2>
+    <br>
+    <% for (var i = 0; i < meerkats.length; i++) { %>
+    <div>
+        <h3>Name: <%= meerkats[i].name %></h3>
+        <h4>Age: <%= meerkats[i].age %></h4>
+        <h4>Favorite food: <%= meerkats[i].favorite_food %></h4>
+        <a href = 'meerkats/<%= meerkats[i]._id%>'>View this meerkat</a>
+    </div>
+    <br>
+    <% } %>
+</body>
+</html>

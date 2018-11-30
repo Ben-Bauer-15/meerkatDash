@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Profils</title>
+</head>
+<body>
+    <div>
+        <% if (meerkat) { %>
+        <form action = '/meerkats/<%= meerkat.id %>' method = 'post'>
+            Name: <input type = 'text' name = 'name' value = '<%= meerkat.name %>'>
+            Age: <input type = 'text' name = 'age' value = '<%= meerkat.age %>'>
+            Favorite Food: <input type = 'text' name = 'favorite_food' value = '<%= meerkat.favorite_food %>'>
+            <input type = 'submit' value = 'Update'>
+        </form>
+        <% } %>
+        <br>
+        <br>
+        <br>
+        <form action = '/meerkats/destroy/<%= meerkat.id %>' method = 'post'>
+            <input type = 'submit' value = 'Delete This Meerkat'>
+        </form>
+    </div>
+</body>
+</html>
