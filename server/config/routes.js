@@ -1,4 +1,5 @@
 var meerkats = require('../controllers/meerkats')
+console.log('routes file')
 
 module.exports = function(app){
     

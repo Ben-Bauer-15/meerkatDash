@@ -1,4 +1,5 @@
 var Meerkat = require('../models/meerkat').meerkat
+console.log('controllers file')
 
 module.exports = {
     index : function(req, res){
