@@ -16,10 +16,7 @@ app.use(session({
 const flash = require('express-flash')
 app.use(flash())
 app.set('view engine', 'ejs');
-require('./server/config/routes')
-
-
-
+require('./server/config/routes')(app)
 
 
 // Setting our Server to Listen on Port: 8000
